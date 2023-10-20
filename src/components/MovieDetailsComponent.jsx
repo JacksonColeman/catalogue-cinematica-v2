@@ -51,7 +51,7 @@ const MovieDetailsComponent = () => {
         <div className='bottom-half-container'>
             <div className="text-container">
                 <strong className="movie-title">{movieDetails.title.toUpperCase()}</strong>
-                <p className="director">Directed by <strong>{director[0].name}</strong></p>
+                {director[0] ? <p className='director'> Directed by <strong>{director[0]?.name}</strong></p> : null}
                 <p className="release-date">Released {movieDetails.release_date.slice(0, 4)}</p>
                 <p className="runtime">Runtime: {movieDetails.runtime} mins</p>
             </div>
@@ -64,12 +64,14 @@ const MovieDetailsComponent = () => {
       </div>
 
       {/* Container for text elements */}
-      
+      <div className='cast-container'>
+        <h3 className='cast-title'>Cast</h3>
         <div className='cast-list'>
         {cast.map(actor => (
           <CastThumbnailComponent key={actor.id} actor={actor} />
         ))}
         </div>
+       </div>
     </div>
   );
 };
