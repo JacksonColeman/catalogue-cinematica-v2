@@ -1,19 +1,20 @@
 // components/Header.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './Header.css'; // Import your stylesheet
 
 const Header = ({ isLoggedIn, userName }) => {
   return (
-    <div>
-      <nav>
-        <div>
+    <header>
+      <nav className="header-nav">
+        <div className="header-links">
           <div>
             <Link to="/">Catalogue Cinematica</Link>
           </div>
           {isLoggedIn ? (
             <>
               <div>
-                <Link to="/account">Account: {userName}</Link>
+                <Link to="/account">Account</Link>
               </div>
             </>
           ) : (
@@ -26,9 +27,18 @@ const Header = ({ isLoggedIn, userName }) => {
               </div>
             </>
           )}
+          <div>
+            <Link to="/films">Films</Link>
+          </div>
+          <div>
+            <Link to="/reviews">Reviews</Link>
+          </div>
+          <div>
+            <Link to="/search">Lists</Link>
+          </div>
         </div>
       </nav>
-    </div>
+    </header>
   );
 };
 

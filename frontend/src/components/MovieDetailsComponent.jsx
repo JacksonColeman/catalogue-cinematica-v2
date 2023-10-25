@@ -4,10 +4,44 @@ import { useParams } from 'react-router-dom';
 import CastThumbnailComponent from './CastThumbnailComponent';
 import './MovieDetailsComponent.css'; // Import the CSS file
 import { Link } from 'react-router-dom';
+import MovieReviewForm from './MovieReviewForm';
+import ReviewContainer from './ReviewContainer';
 
 const MovieDetailsComponent = () => {
   const [movieDetails, setMovieDetails] = useState(null);
   const { id } = useParams();
+
+  const movieData = {
+    tmdb_id: movieDetails?.id,
+    title: movieDetails?.title
+  };
+
+  const postMovie = async () => {
+  // Make a fetch POST request
+  fetch('/api/movies', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'credentials': 'true'
+      // Add any other headers you might need, e.g., authorization headers
+    },
+    body: JSON.stringify({ movie: movieData }),
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Movie creation failed');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Movie created successfully:', data);
+      // Do something with the response, like redirecting or updating the UI
+    })
+    .catch(error => {
+      console.error('Movie creation error:', error);
+      // Handle the error as needed
+    });
+  }
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -89,6 +123,9 @@ const MovieDetailsComponent = () => {
         ))}
         </div>
        </div>
+
+       <MovieReviewForm movie={movieDetails} postMovie={postMovie}/>
+       <ReviewContainer movie={movieDetails}/>
     </div>
   );
 };

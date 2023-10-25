@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [error, setError] = useState('')
 
   const handleSignUp = async () => {
+
     try {
       const response = await fetch('/api/signup', {
         method: 'POST',
@@ -24,8 +28,9 @@ const SignUp = () => {
 
       if (response.ok) {
         console.log(data.message); // You can handle success as needed
+        navigate('/login')
       } else {
-        console.error(data.errors); // Handle errors
+        setError(data.errors); // Handle errors
       }
     } catch (error) {
       console.error('An error occurred:', error);
@@ -59,6 +64,7 @@ const SignUp = () => {
           Sign Up
         </button>
       </form>
+      <p>{error}</p>
     </div>
   );
 };

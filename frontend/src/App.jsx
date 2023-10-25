@@ -57,7 +57,7 @@ const App = () => {
   useEffect(() => {
     // Fetch discover movies when the user returns to '/'
     fetchDiscoverMovies();
-    return;
+    checkLoginStatus();
   }, [navigate]);
 
   const handleSearch = async (query) => {
@@ -86,9 +86,6 @@ const App = () => {
           <Route path="/"
             element = {
               <div className='home-page'>
-                <div className='watchlist-link'>
-                  <Link to='/watchlist'>My Watchlist</Link>
-                </div>
                 <h1 className='main-page-header'>Catalogue Cinematica</h1>
                 <SearchBar onSearch={handleSearch} />
                 <MovieList movies={movies} />
