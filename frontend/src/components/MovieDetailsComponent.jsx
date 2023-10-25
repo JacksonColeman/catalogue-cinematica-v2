@@ -59,9 +59,6 @@ const MovieDetailsComponent = () => {
       {/* Container for the backdrop image */}
         
         <div className="backdrop-container">
-            <Link to='/'>
-                <h1 className="cc-header">Catalogue Cinematica</h1>
-            </Link>
             <img src={backdrop} className="backdrop-image" alt="Movie backdrop not found" />
 
         <div>

@@ -10,7 +10,7 @@ const MovieList = ({ movies }) => {
     <div className='movie-container'>
       <div className="movie-grid">
         {movies.map(movie => (
-          <MovieThumbnailComponent movie={movie}/>
+          <MovieThumbnailComponent movie={movie} key={movie.id}/>
         ))}
       </div>
     </div>

@@ -8,23 +8,25 @@ import Watchlist from './components/Watchlist'
 import Header from './components/Header'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
+import Account from './components/Account'
 
 const App = () => {
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState({})
   const userName = 'John Doe'; // Replace with actual user name
 
   const checkLoginStatus = async () => {
     try {
-      const response = await fetch('http://localhost:3000/check-login-status', {
+      const response = await fetch('/api/check', {
         method: 'GET',
-        credentials: 'include', // Include cookies in the request
       });
   
       if (response.ok) {
         const data = await response.json();
-        setLoggedIn(data.logged_in);
+        setLoggedIn(data.active_session);
+        setUser(data.user)
         console.log(data)
       } else {
         console.error('Failed to check login status');
@@ -76,7 +78,7 @@ const App = () => {
 
   return (
       <div className='app'>
-        <Header isLoggedIn={isLoggedIn} userName={userName}/>
+        <Header isLoggedIn={isLoggedIn} userName={user?.username}/>
         <Routes>
           <Route path="/movie/:id"
             element = {<MovieDetailsComponent />}
@@ -102,6 +104,9 @@ const App = () => {
             <Route path='/login'
               element={<Login setLoggedIn={setLoggedIn}/>}
               />
+            <Route path='/account'
+              element={<Account/>}
+            />
         </Routes>
       </div>
   );

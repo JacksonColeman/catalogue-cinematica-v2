@@ -13,7 +13,7 @@ const Header = ({ isLoggedIn, userName }) => {
           {isLoggedIn ? (
             <>
               <div>
-                <Link to="/account">{userName}'s Account</Link>
+                <Link to="/account">Account: {userName}</Link>
               </div>
             </>
           ) : (
