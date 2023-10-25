@@ -5,10 +5,34 @@ import MovieList from './components/MovieList'
 import MovieDetailsComponent from './components/MovieDetailsComponent'
 import { Routes, Route, useNavigate, Link} from 'react-router-dom'
 import Watchlist from './components/Watchlist'
+import Header from './components/Header'
+import SignUp from './components/SignUp'
+import Login from './components/Login'
 
 const App = () => {
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const userName = 'John Doe'; // Replace with actual user name
+
+  const checkLoginStatus = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/check-login-status', {
+        method: 'GET',
+        credentials: 'include', // Include cookies in the request
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        setLoggedIn(data.logged_in);
+        console.log(data)
+      } else {
+        console.error('Failed to check login status');
+      }
+    } catch (error) {
+      console.error('An error occurred while checking login status:', error);
+    }
+  };
   
   const fetchDiscoverMovies = async () => {
     try {
@@ -24,6 +48,7 @@ const App = () => {
   useEffect(() => {
     // Fetch discover movies when the component mounts
     fetchDiscoverMovies();
+    checkLoginStatus();
   }, []);
 
 
@@ -51,6 +76,7 @@ const App = () => {
 
   return (
       <div className='app'>
+        <Header isLoggedIn={isLoggedIn} userName={userName}/>
         <Routes>
           <Route path="/movie/:id"
             element = {<MovieDetailsComponent />}
@@ -70,6 +96,12 @@ const App = () => {
             <Route path='/watchlist'
               element={<Watchlist/>}
             />
+            <Route path ='/signup'
+              element={<SignUp setLoggedIn={setLoggedIn}/>}
+              />
+            <Route path='/login'
+              element={<Login setLoggedIn={setLoggedIn}/>}
+              />
         </Routes>
       </div>
   );
