@@ -1,0 +1,17 @@
+.review-modal {
+  position: absolute;
+  left: 50%;
+  margin: 0 auto;
+  width: 36rem;
+  height: 20rem;
+  transform: translate(-50%, 50%);
+  background-color: var(--cc-grey-7);
+  color: var(--cc-light-grey);
+  border-radius: 5px;
+  box-shadow: 0 0 20px 20px black;
+  z-index: 2;
+}
+
+.movie-review-form {
+  /* position: absolute; */
+}

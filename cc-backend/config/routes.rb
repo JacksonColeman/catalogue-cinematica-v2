@@ -16,4 +16,7 @@ Rails.application.routes.draw do
       put :update
     end
   end
+
+  post '/reviews/:id/like', to: 'reviews#like', as: 'like_review'
+  delete '/reviews/:id/unlike', to: 'reviews#unlike', as: 'unlike_review'
 end

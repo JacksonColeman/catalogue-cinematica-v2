@@ -2,16 +2,16 @@
 class SessionsController < ApplicationController
   # POST /api/sessions (for user login)
   def create
-      user = User.find_by(username: params[:username])
-      
-      if user
-        session[:user_id] = user.id
-        render json: { user: user, message: 'Login successful' }, status: :ok
-        puts session
-      else
-        render json: { error: 'Invalid user ID' }, status: :unauthorized
-      end
+    user = User.find_by(username: params[:username])
+  
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      render json: { user: user, message: 'Login successful' }, status: :ok
+    else
+      errors = ["Invalid username or password"]
+      render json: { errors: errors }, status: :unauthorized
     end
+  end
 
   # GET /api/sessions/check 
   def check
