@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignupModal.css";
+import { LiaTimesSolid } from "react-icons/lia";
+import { FaUser } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
 
 const SignupModal = ({ open, handleCloseModal }) => {
   if (!open) {
@@ -38,6 +41,10 @@ const SignupModal = ({ open, handleCloseModal }) => {
         // Convert the errors array to a string
         console.log(data.errors);
         setErrors(data.errors); // Set the string in the state
+        // Reset username and password fields on error
+        setUsername("");
+        setPassword("");
+        setPasswordConfirmation("");
       }
     } catch (error) {
       setErrors([error.message] || ["An error occurred"]); // Set a default error message
@@ -49,46 +56,59 @@ const SignupModal = ({ open, handleCloseModal }) => {
     <div className="modal-component">
       <div className="overlay" onClick={handleCloseModal}></div>
       <div className="signup-modal-container">
-        <button className="btn--close-modal" onClick={handleCloseModal}>
-          x
-        </button>
+        <LiaTimesSolid
+          className="btn--close-modal"
+          onClick={handleCloseModal}
+        />
         <div>
-          <h3>Sign Up</h3>
-          <form>
-            <label>
-              Username:
+          <h3 className="modal-header">Sign Up</h3>
+          <form className="modal-form">
+            <label className="modal-label">
+              <FaUser />
               <input
+                className="modal-input"
                 type="text"
                 value={username}
+                placeholder="Username"
                 onChange={(e) => setUsername(e.target.value)}
               />
             </label>
             <br />
-            <label>
-              Password:
+            <label className="modal-label">
+              <FaLock />
               <input
+                className="modal-input"
                 type="password"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </label>
             <br />
-            <label>
-              Confirm Password:
+            <label className="modal-label">
+              <FaLock />
               <input
+                className="modal-input"
                 type="password"
+                placeholder="Confirm Password"
                 value={passwordConfirmation}
                 onChange={(e) => setPasswordConfirmation(e.target.value)}
               />
             </label>
             <br />
-            <button type="button" onClick={handleSignUp}>
+            <div className="modal-error-container">
+              {errors.map((error) => (
+                <p className="error-message">{error}</p>
+              ))}
+            </div>
+            <button
+              type="button"
+              className="modal-button-main"
+              onClick={handleSignUp}
+            >
               Sign Up
             </button>
           </form>
-          {errors.map((error) => (
-            <p>{error}</p>
-          ))}
         </div>
       </div>
     </div>

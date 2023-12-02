@@ -93,6 +93,10 @@
   align-items: center;
 }
 
+.movie-btn {
+  text-decoration: none;
+}
+
 .movie-btn:hover {
   background-color: var(--cc-grey-7);
   color: var(--cc-gold);

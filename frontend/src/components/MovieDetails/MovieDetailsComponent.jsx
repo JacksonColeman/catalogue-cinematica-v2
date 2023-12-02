@@ -19,6 +19,7 @@ import ReviewContainer from "../Reviews/ReviewContainer";
 import CastDisplay from "./CastDisplay";
 
 const MovieDetailsComponent = () => {
+  const [openReviewModal, setOpenReviewModal] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
   const { id } = useParams();
   const [reviewFormActive, setReviewFormActive] = useState(false);
@@ -26,6 +27,8 @@ const MovieDetailsComponent = () => {
   const movieData = {
     tmdb_id: movieDetails?.id,
     title: movieDetails?.title,
+    backdrop_path: movieDetails?.backdrop_path,
+    poster_path: movieDetails?.poster_path,
   };
 
   const postMovie = async () => {
@@ -95,7 +98,8 @@ const MovieDetailsComponent = () => {
       <MovieReviewForm
         movie={movieDetails}
         postMovie={postMovie}
-        active={reviewFormActive}
+        active={openReviewModal}
+        handleCloseModal={() => setOpenReviewModal(false)}
       />
       <div style={backgroundImageStyle} className="backdrop-img-container">
         <div className="movie-details-text">
@@ -117,13 +121,14 @@ const MovieDetailsComponent = () => {
             </p>
           </div>
           <div className="btn-group">
-            <button
-              onClick={() => setReviewFormActive(true)}
+            <a
+              href="#top"
+              onClick={() => setOpenReviewModal(true)}
               className="movie-btn"
             >
               <BsPencilSquare />
               <span className="movie-btn-text">Review</span>
-            </button>
+            </a>
             <button className="movie-btn">
               {" "}
               <AiOutlineHeart />

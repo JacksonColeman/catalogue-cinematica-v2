@@ -4,8 +4,11 @@ class User < ApplicationRecord
     validate :password_complexity
     has_many :likes, dependent: :destroy
     has_many :reviews, dependent: :destroy
+    has_many :movie_lists, dependent: :destroy
   
     has_secure_password
+
+    after_create :create_default_lists
   
     private
   
@@ -16,4 +19,9 @@ class User < ApplicationRecord
         errors.add(:password, "must include at least one uppercase letter, one lowercase letter, one digit, and one special character")
       end
     end
+
+    def create_default_lists
+        MovieList.create(user: self, name: 'Favorites', deletable: false)
+        MovieList.create(user: self, name: 'Watchlist', deletable: false)
+      end
   end

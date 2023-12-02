@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import SearchBar from "./components/SearchBar";
 import MovieList from "./components/Discover/MovieList";
 import MovieDetailsComponent from "./components/MovieDetails/MovieDetailsComponent";
 import { Routes, Route, useNavigate, Link } from "react-router-dom";
-import Watchlist from "./components/Watchlist";
 import Header from "./components/Header/Header";
-import SignUp from "./components/SignUp";
-import Login from "./components/Login";
-import Account from "./components/Account";
+import Account from "./components/Account/Account";
 import Hero from "./components/Hero/Hero";
 import Sandbox from "./components/Sandbox Elements/Sandbox";
+import ListPage from "./components/Lists/ListPage";
+import ReviewPage from "./components/Reviews/ReviewPage";
 
 const App = () => {
   const navigate = useNavigate();
@@ -71,11 +69,10 @@ const App = () => {
         <Route path="/movie/:id" element={<MovieDetailsComponent />} />
         <Route path="/" element={<Hero />} />
         <Route path="/films" element={<MovieList />} />
-        <Route path="/watchlist" element={<Watchlist />} />
-        <Route path="/signup" element={<SignUp setLoggedIn={setLoggedIn} />} />
-        <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
-        <Route path="/account" element={<Account user={user} />} />
+        <Route path="/account" element={<Account userId={user?.id} />} />
+        <Route path="/lists" element={<ListPage />} />
         <Route path="/sandbox" element={<Sandbox />} />
+        <Route path="/reviews" element={<ReviewPage />} />
       </Routes>
     </div>
   );

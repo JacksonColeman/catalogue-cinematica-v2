@@ -3,9 +3,9 @@ class MoviesController < ApplicationController
         movie = Movie.new(movie_params)
 
         if movie.save
-        render json: { message: 'Movie created successfully', movie: movie }
+          render json: { message: 'Movie created successfully', movie: movie }
         else
-        render json: { error: movie.errors.full_messages.join(', ') }, status: :unprocessable_entity
+          render json: { error: movie.errors.full_messages.join(', ') }, status: :unprocessable_entity
         end
     end
 
@@ -23,6 +23,6 @@ class MoviesController < ApplicationController
     private
 
     def movie_params
-        params.require(:movie).permit(:tmdb_id, :title)
+        params.require(:movie).permit(:tmdb_id, :title, :backdrop_path, :poster_path)
     end
 end

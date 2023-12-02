@@ -3,7 +3,7 @@ import Rating from "@mui/material/Rating";
 import "./ReviewComponent.css";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
-const ReviewComponent = ({ review }) => {
+const ReviewComponent = ({ review, showMovie }) => {
   const [reviewData, setReviewData] = useState(review);
 
   // method to like review
@@ -69,6 +69,18 @@ const ReviewComponent = ({ review }) => {
 
   return (
     <div className="review-item">
+      {showMovie ? (
+        <img
+          className="movie-poster-img"
+          src={
+            reviewData.movie.backdrop_path
+              ? `https://image.tmdb.org/t/p/w185/${reviewData.movie.poster_path}`
+              : ""
+          }
+          alt={`${reviewData.movie.title} Poster`}
+        />
+      ) : null}
+      {showMovie ? <h4>{reviewData.movie.title}</h4> : null}
       <header className="review-header">
         <span className="review-username">{reviewData.user.username}</span>{" "}
         <Rating
@@ -89,9 +101,9 @@ const ReviewComponent = ({ review }) => {
           <AiOutlineHeart className="heart-outline-icon" onClick={handleLike} />
         )}
         <span>{reviewData.likes_count} likes</span>
-        <a href="#" className="reply-button">
+        {/* <a href="#" className="reply-button">
           Reply
-        </a>
+        </a> */}
       </footer>
     </div>
   );

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_07_225435) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_14_192908) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,11 +23,24 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_07_225435) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
+  create_table "movie_lists", force: :cascade do |t|
+    t.string "name"
+    t.boolean "deletable"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_movie_lists_on_user_id"
+  end
+
   create_table "movies", force: :cascade do |t|
     t.integer "tmdb_id"
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "movie_list_id"
+    t.string "poster_path"
+    t.string "backdrop_path"
+    t.index ["movie_list_id"], name: "index_movies_on_movie_list_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -52,6 +65,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_07_225435) do
 
   add_foreign_key "likes", "reviews"
   add_foreign_key "likes", "users"
+  add_foreign_key "movie_lists", "users"
+  add_foreign_key "movies", "movie_lists"
   add_foreign_key "reviews", "movies"
   add_foreign_key "reviews", "users"
 end

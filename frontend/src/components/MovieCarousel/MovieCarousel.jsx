@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MovieThumbnailComponent from "../MovieThumbnailComponent";
+import MovieThumbnailComponent from "../MovieDetails/MovieDetailsComponent";
 import "./MovieCarousel.css";
 
 const Carousel = ({ movies }) => {

@@ -1,17 +1,67 @@
 .review-modal {
   position: absolute;
   left: 50%;
+  top: 0%;
   margin: 0 auto;
-  width: 36rem;
-  height: 20rem;
-  transform: translate(-50%, 50%);
+  width: 48rem;
+  min-height: 20rem;
+  transform: translate(-50%, 20%);
   background-color: var(--cc-grey-7);
   color: var(--cc-light-grey);
   border-radius: 5px;
   box-shadow: 0 0 20px 20px black;
-  z-index: 2;
+  z-index: 5;
+  padding: 2rem;
+  display: flex;
+  gap: 2rem;
 }
 
 .movie-review-form {
   /* position: absolute; */
+}
+
+.review-prompt {
+  font-size: 1.33rem;
+  margin-bottom: 1rem;
+}
+.review-movie-title {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.review-text-area {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 1rem;
+  background-color: var(--cc-grey-5);
+  color: var(--cc-dark-grey);
+  margin-bottom: 0.5rem;
+}
+
+.modal-button-main.review-button {
+  width: 16rem;
+  background-color: var(--cc-gold);
+  color: var(--cc-dark-grey);
+}
+
+.modal-button-main.review-button:hover {
+  width: 16rem;
+  background-color: var(--cc-dark-gold);
+}
+
+.modal-button-main.review-button:disabled,
+.modal-button-main.review-button:disabled:hover {
+  width: 16rem;
+  background-color: var(--cc-light-gold);
+  cursor: auto;
+}
+
+.star-rating-component {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.MuiRating-iconEmpty {
+  color: red;
 }

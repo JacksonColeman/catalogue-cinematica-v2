@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
     puts session
       if session[:user_id]
         user = User.find_by(id: session[:user_id])
-        render json: { active_session: true, user: user }, status: :ok
+        render json: { active_session: true, user: user.as_json(only: [:id, :username], include: [:reviews, { movie_lists: { include: :movies } }]) }, status: :ok
       else
         render json: { active_session: false }, status: :ok
       end

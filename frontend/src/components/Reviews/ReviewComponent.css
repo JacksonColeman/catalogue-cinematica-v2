@@ -49,7 +49,7 @@
 
 .heart-fill-icon {
   font-size: 1.2rem;
-  /* color: var(--cc-red); */
+  color: var(--cc-red);
 }
 
 .heart-fill-icon:hover {

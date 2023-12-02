@@ -3,9 +3,9 @@ import "./MovieReviewForm.css";
 import StarRating from "../Sandbox Elements/StarRating";
 import "../Sandbox Elements/StarRating.css";
 import Rating from "@mui/material/Rating";
+import { LiaTimesSolid } from "react-icons/lia";
 
-const MovieReviewForm = ({ movie, postMovie, active }) => {
-  const [rating, setRating] = useState("");
+const MovieReviewForm = ({ movie, postMovie, active, handleCloseModal }) => {
   const [reviewText, setReviewText] = useState("");
   const [rateValue, setRateValue] = useState(0);
   // const [isActive, setIsActive] = useState(active);
@@ -25,6 +25,8 @@ const MovieReviewForm = ({ movie, postMovie, active }) => {
       console.error("Error checking if movie exists:", error);
     }
   };
+
+  const isSubmitDisabled = rateValue == 0 || reviewText.trim() === "";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,6 +56,7 @@ const MovieReviewForm = ({ movie, postMovie, active }) => {
 
       const data = await response.json();
       console.log("Review submitted successfully:", data);
+      window.location.reload(false);
 
       // Do something with the response, like displaying a success message
     } catch (error) {
@@ -62,35 +65,62 @@ const MovieReviewForm = ({ movie, postMovie, active }) => {
     }
   };
 
+  const onModalClose = () => {
+    setRateValue(0);
+    setReviewText("");
+    handleCloseModal();
+  };
+
   return (
     <div className="movie-review-form">
-      <div className="overlay" onClick={() => setIsActive(false)}></div>
+      <div className="overlay" onClick={onModalClose}></div>
       <div className="review-modal">
-        <h2>Movie Review Form</h2>
+        <LiaTimesSolid className="btn--close-modal" onClick={onModalClose} />
+        <div className="review-modal-left">
+          <img
+            className="review-movie-poster"
+            src={`https://image.tmdb.org/t/p/w185/${movie.poster_path}`}
+            alt="Movie poster"
+          />
+        </div>
         <form onSubmit={handleSubmit}>
-          <div className="star-rating-component" value={rateValue}>
-            <Rating
-              precision={0.5}
-              onChange={(e, value) => setRateValue(value * 2)}
-            />
-            <p>Rating: {rateValue}</p>
-          </div>
-          <br />
-
-          <label htmlFor="reviewText">Review Text: </label>
+          <label>
+            <p className="review-prompt">
+              Add a review for{" "}
+              <span className="review-movie-title">{movie.title}</span>
+            </p>
+          </label>
           <textarea
+            className="review-text-area"
             id="reviewText"
             name="reviewText"
             rows="4"
             cols="50"
             value={reviewText}
+            placeholder="Write a review..."
             onChange={(e) => setReviewText(e.target.value)}
             required
           ></textarea>
 
           <br />
 
-          <button type="submit">Submit Review</button>
+          <div className="star-rating-component" value={rateValue}>
+            <p>Rating</p>
+            <Rating
+              precision={0.5}
+              onChange={(e, value) => setRateValue(value * 2)}
+            />
+          </div>
+
+          <br />
+
+          <button
+            className="modal-button-main review-button"
+            type="submit"
+            disabled={isSubmitDisabled}
+          >
+            Submit Review
+          </button>
         </form>
       </div>
     </div>

@@ -11,7 +11,17 @@ class UsersController < ApplicationController
   end
 
   def current
-    render json: { user: current_user }
+    render json: current_user, serializer: UserSerializer, status: :ok
+  end
+
+  def show
+    user = User.find_by(id: params[:id])
+
+    if user
+      render json: user, serializer: UserSerializer, status: :ok
+    else
+      render json: { error: 'User not found' }, status: :not_found
+    end
   end
 
   private

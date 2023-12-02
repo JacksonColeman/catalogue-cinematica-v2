@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get '/check', to: 'sessions#check'
   resources :movies, only: [:show, :create]
 
+  resources :users, only: [:create, :show]
+
   resources :reviews, only: [:create, :index], param: :tmdb_id do
     collection do
       get 'user/:user_id', to: 'reviews#reviews_by_user', as: 'by_user'
@@ -14,6 +16,14 @@ Rails.application.routes.draw do
     end
     member do
       put :update
+    end
+  end
+
+  resources :movie_lists, only: [:index, :show, :create, :destroy, :update] do
+    member do
+      post 'add_movie/:movie_id', to: 'movie_lists#add_movie', as: 'add_movie'
+      delete 'remove_movie/:movie_id', to: 'movie_lists#remove_movie', as: 'remove_movie'
+      patch :update_name
     end
   end
 
