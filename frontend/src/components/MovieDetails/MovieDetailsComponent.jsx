@@ -6,7 +6,7 @@ import "./MovieDetailsComponent.css"; // Import the CSS file
 import { LuClock4 } from "react-icons/lu";
 import { BiCameraMovie } from "react-icons/bi";
 import { BsPencilSquare } from "react-icons/bs";
-import { RiVideoAddLine } from "react-icons/ri";
+import { RiVideoAddLine, RiVidiconFill } from "react-icons/ri";
 import {
   AiOutlineCalendar,
   AiOutlineHeart,
@@ -22,40 +22,50 @@ const MovieDetailsComponent = () => {
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
   const { id } = useParams();
-  const [reviewFormActive, setReviewFormActive] = useState(false);
 
-  const movieData = {
-    tmdb_id: movieDetails?.id,
-    title: movieDetails?.title,
-    backdrop_path: movieDetails?.backdrop_path,
-    poster_path: movieDetails?.poster_path,
+  const [inDb, setInDb] = useState(false);
+  const [backendMovieData, setBackendMovieData] = useState(null);
+
+  const checkIfMovieExists = async (tmdbID) => {
+    try {
+      const response = await fetch(`/api/movies/${tmdbID}`);
+      if (response.ok) {
+        const movieData = await response.json();
+        setBackendMovieData(movieData);
+        setInDb(true);
+        return true;
+      } else {
+        setInDb(false);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error checking if movie exists:", error);
+    }
   };
 
-  const postMovie = async () => {
-    // Make a fetch POST request
-    fetch("/api/movies", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        credentials: "true",
-        // Add any other headers you might need, e.g., authorization headers
-      },
-      body: JSON.stringify({ movie: movieData }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Movie creation failed");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Movie created successfully:", data);
-        // Do something with the response, like redirecting or updating the UI
-      })
-      .catch((error) => {
-        console.error("Movie creation error:", error);
-        // Handle the error as needed
+  const postMovie = async (movieData) => {
+    try {
+      const response = await fetch("/api/movies", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          credentials: "true",
+        },
+        body: JSON.stringify({ movie: movieData }),
       });
+
+      if (!response.ok) {
+        throw new Error("Movie creation failed");
+      }
+
+      const data = await response.json();
+      console.log("Movie created successfully:", data);
+      setBackendMovieData(data); // Update the state with the created movie data
+      setInDb(true);
+    } catch (error) {
+      console.error("Movie creation error:", error);
+      // Handle the error as needed
+    }
   };
 
   useEffect(() => {
@@ -65,14 +75,34 @@ const MovieDetailsComponent = () => {
           https://api.themoviedb.org/3/movie/${id}?append_to_response=credits&api_key=${"67efd9f8bb8609b38ab7599192991049"}`);
         const data = await response.json();
         setMovieDetails(data);
-        console.log(data);
+
+        const movieData = {
+          tmdb_id: data.id,
+          title: data.title,
+          backdrop_path: data.backdrop_path,
+          poster_path: data.poster_path,
+        };
+
+        // If the movie doesn't exist, post it to the database
+
+        if (data.id) {
+          await postMovie(movieData);
+        } else {
+          console.error("Movie data is not available for posting.");
+        }
       } catch (error) {}
     };
 
+    // Fetch movie details and check/post to the database
     fetchMovieDetails();
+    checkIfMovieExists(id);
   }, [id]);
 
-  if (!movieDetails) {
+  useEffect(() => {
+    setInDb(!!backendMovieData); // Set inDb to true when backendMovieData is truthy
+  }, [backendMovieData]);
+
+  if (!movieDetails || !inDb) {
     return <div>Loading...</div>;
   }
 
@@ -91,6 +121,62 @@ const MovieDetailsComponent = () => {
 
   const backgroundImageStyle = {
     backgroundImage: `linear-gradient(to bottom, transparent 40%, var(--cc-dark-grey)),linear-gradient(to top, transparent 90%, rgba(0, 0, 0, 1)),linear-gradient(to left, rgba(0, 0, 0, 0.1) 90%, rgba(0, 0, 0, 1)),linear-gradient(to right, transparent 90%, rgba(0, 0, 0, 1)), url(${backdrop})`,
+  };
+
+  // add to list
+  const addToList = async (movieId, listName) => {
+    try {
+      const response = await fetch("/api/movie_lists/add_to_list", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          movie_id: movieId,
+          list_name: listName,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data); // Handle the response data as needed
+    } catch (error) {
+      console.error("Error adding to list:", error);
+    }
+  };
+
+  const removeFromList = async (movieId, listName) => {
+    try {
+      const response = await fetch("/api/movie_lists/remove_from_list", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          movie_id: movieId,
+          list_name: listName,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data); // Handle the response data as needed
+    } catch (error) {
+      console.error("Error removing from list:", error);
+    }
+  };
+
+  const handleAddToList = async (listName) => {
+    console.log("Calling handle add to list");
+    console.log(backendMovieData);
+    await addToList(backendMovieData.movie.tmdb_id, listName).then(() =>
+      checkIfMovieExists(id)
+    );
+  };
+
+  const handleRemoveFromList = async (listName) => {
+    // Assuming you have the listName from somewhere
+    await removeFromList(backendMovieData.movie.tmdb_id, listName).then(() =>
+      checkIfMovieExists(id)
+    );
   };
 
   return (
@@ -129,15 +215,42 @@ const MovieDetailsComponent = () => {
               <BsPencilSquare />
               <span className="movie-btn-text">Review</span>
             </a>
-            <button className="movie-btn">
-              {" "}
-              <AiOutlineHeart />
-              <span className="movie-btn-text">Favorite</span>
-            </button>
-            <button className="movie-btn">
-              <RiVideoAddLine />
-              <span className="movie-btn-text">Add to List</span>
-            </button>
+            {backendMovieData && backendMovieData?.check?.is_favorite ? (
+              <button
+                className="movie-btn"
+                onClick={() => handleRemoveFromList("Favorites")}
+              >
+                {" "}
+                <AiFillHeart className="favorite-btn-filled" />
+                <span className="movie-btn-text">Favorite</span>
+              </button>
+            ) : (
+              <button
+                className="movie-btn"
+                onClick={() => handleAddToList("Favorites")}
+              >
+                {" "}
+                <AiOutlineHeart />
+                <span className="movie-btn-text">Favorite</span>
+              </button>
+            )}
+            {backendMovieData && backendMovieData.check?.is_watchlist ? (
+              <button
+                className="movie-btn "
+                onClick={() => handleRemoveFromList("Watchlist")}
+              >
+                <RiVidiconFill className="favorite-btn-filled" />
+                <span className="movie-btn-text">Watchlist</span>
+              </button>
+            ) : (
+              <button
+                className="movie-btn"
+                onClick={() => handleAddToList("Watchlist")}
+              >
+                <RiVideoAddLine />
+                <span className="movie-btn-text">Watchlist</span>
+              </button>
+            )}
           </div>
         </div>
 

@@ -25,6 +25,12 @@ Rails.application.routes.draw do
       delete 'remove_movie/:movie_id', to: 'movie_lists#remove_movie', as: 'remove_movie'
       patch :update_name
     end
+    collection do
+      post 'add_to_favorites/:movie_id', action: :add_to_favorites, as: 'add_to_favorites'
+      delete 'remove_from_favorites/:movie_id', action: :remove_from_favorites, as: 'remove_from_favorites'
+      post 'add_to_list', action: :add_to_list
+      delete 'remove_from_list', action: :remove_from_list
+    end
   end
 
   post '/reviews/:id/like', to: 'reviews#like', as: 'like_review'

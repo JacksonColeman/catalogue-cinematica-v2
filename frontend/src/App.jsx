@@ -14,7 +14,6 @@ const App = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
-  const userName = "John Doe"; // Replace with actual user name
 
   const checkLoginStatus = async () => {
     try {
@@ -26,7 +25,6 @@ const App = () => {
         const data = await response.json();
         setLoggedIn(data.active_session);
         setUser(data.user);
-        console.log(data);
       } else {
         console.error("Failed to check login status");
       }

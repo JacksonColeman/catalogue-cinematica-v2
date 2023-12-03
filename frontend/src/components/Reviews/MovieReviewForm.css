@@ -12,6 +12,9 @@
   box-shadow: 0 0 20px 20px black;
   z-index: 5;
   padding: 2rem;
+}
+
+.review-flex-container {
   display: flex;
   gap: 2rem;
 }
@@ -36,6 +39,10 @@
   background-color: var(--cc-grey-5);
   color: var(--cc-dark-grey);
   margin-bottom: 0.5rem;
+}
+
+.review-button {
+  margin-bottom: 1rem;
 }
 
 .modal-button-main.review-button {
@@ -64,4 +71,8 @@
 
 .MuiRating-iconEmpty {
   color: red;
+}
+
+.review-error-message {
+  color: var(--cc-red);
 }

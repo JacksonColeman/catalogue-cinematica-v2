@@ -43,8 +43,6 @@ const Header = ({ isLoggedIn, userName }) => {
     }
   };
 
-  const throttledSearch = throttle(handleSearch, 500);
-
   const handleSearchIconClick = () => {
     setIsSearchOpen(!isSearchOpen);
     setSearchQuery("");
@@ -53,7 +51,7 @@ const Header = ({ isLoggedIn, userName }) => {
   const handleSearchInputChange = (e) => {
     const newQuery = e.target.value;
     setSearchQuery(newQuery);
-    throttledSearch(newQuery);
+    handleSearch(newQuery);
   };
 
   const handleOverlayClick = () => {
@@ -86,7 +84,7 @@ const Header = ({ isLoggedIn, userName }) => {
                 <input
                   className="search-bar-input"
                   type="text"
-                  placeholder="Search"
+                  placeholder="Search for a film"
                   value={searchQuery}
                   onChange={handleSearchInputChange}
                   autoFocus={true}

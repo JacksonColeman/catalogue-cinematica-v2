@@ -4,5 +4,5 @@ class Movie < ApplicationRecord
     validates :poster_path, presence: true
     validates :backdrop_path, presence: true
     has_many :reviews
-    belongs_to :movie_list, optional: true
+    has_and_belongs_to_many :movie_lists
 end
