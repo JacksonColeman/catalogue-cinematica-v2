@@ -3,7 +3,7 @@ import "./MovieReviewForm.css";
 import StarRating from "../Sandbox Elements/StarRating";
 import "../Sandbox Elements/StarRating.css";
 import Rating from "@mui/material/Rating";
-import { LiaTimesSolid } from "react-icons/lia";
+import { AiOutlineClose } from "@react-icons/all-files/ai/AiOutlineClose";
 
 const MovieReviewForm = ({ movie, postMovie, active, handleCloseModal }) => {
   const [reviewText, setReviewText] = useState("");
@@ -79,7 +79,7 @@ const MovieReviewForm = ({ movie, postMovie, active, handleCloseModal }) => {
       <div className="overlay" onClick={onModalClose}></div>
       <div className="review-modal">
         <div className="review-flex-container">
-          <LiaTimesSolid className="btn--close-modal" onClick={onModalClose} />
+          <AiOutlineClose className="btn--close-modal" onClick={onModalClose} />
           <div className="review-modal-left">
             <img
               className="review-movie-poster"

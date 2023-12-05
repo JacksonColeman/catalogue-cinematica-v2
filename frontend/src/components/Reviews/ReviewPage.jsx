@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReviewComponent from "./ReviewComponent";
+import "./ReviewPage.css";
 
 const ReviewPage = () => {
   const [reviews, setReviews] = useState([]);
@@ -13,12 +14,14 @@ const ReviewPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Review Page</h1>
-      {reviews &&
-        reviews.map((review) => (
-          <ReviewComponent key={review.id} review={review} showMovie={true} />
-        ))}
+    <div className="review-page">
+      <h2 className="review-page-header">Recent Reviews</h2>
+      <div className="review-page-review-container">
+        {reviews &&
+          reviews.map((review) => (
+            <ReviewComponent key={review.id} review={review} showMovie={true} />
+          ))}
+      </div>
     </div>
   );
 };

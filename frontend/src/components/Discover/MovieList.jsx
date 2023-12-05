@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./MovieList.css"; // Import the CSS file for styling
 import MovieThumbnailComponent from "./MovieThumbnailComponent";
-import Carousel from "../MovieCarousel/MovieCarousel";
 
 const MovieList = ({}) => {
   const [movies, setMovies] = useState([]);

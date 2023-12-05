@@ -1,7 +1,7 @@
 .review-item {
-  /* background-color: var(--cc-grey-7); */
   border-top: 1px solid var(--cc-grey-7);
   padding: 1rem;
+  /* max-height: 12rem; */
 }
 
 .review-header {
@@ -66,4 +66,38 @@
 .reply-button:hover,
 .reply-button:active {
   text-decoration: underline;
+}
+
+.sm-review-item {
+  display: flex;
+  align-items: start;
+  border: none;
+  /* background-color: var(--cc-grey-7); */
+  border-top: 1px solid var(--cc-grey-7);
+}
+
+.movie-poster-img {
+  aspect-ratio: 185/278;
+  height: 12rem;
+}
+
+.review-poster-container {
+  margin-right: 2rem;
+  display: inline-block;
+}
+
+.review-comp-movie-title:link,
+.review-comp-movie-title:visited {
+  display: inline-block;
+  font-family: inherit;
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--cc-light-grey);
+  text-decoration: none;
+}
+
+.review-comp-movie-title:hover,
+.review-comp-movie-title:hover {
+  color: var(--cc-gold);
 }

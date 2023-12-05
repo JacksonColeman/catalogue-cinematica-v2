@@ -1,3 +1,45 @@
 .account-page {
   color: var(--cc-light-grey);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2rem 4rem;
+  column-gap: 2rem;
+}
+
+.account-page-header {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+.account-page-left {
+  grid-column: 1/2;
+  grid-row: 1/-1;
+}
+.account-review-section {
+  grid-column: 2/3;
+  grid-row: 1/-1;
+}
+
+.account-favorites-section {
+  /* border-top: 1px solid var(--cc-grey-7); */
+}
+
+.account-watchlist-section {
+  /* border-top: 1px solid var(--cc-grey-7); */
+}
+
+.account-reviews-header {
+}
+
+.logout-button {
+  text-transform: uppercase;
+  color: var(--cc-grey-5);
+  font-size: 0.8rem;
+}
+
+.logout-button:hover {
+  text-transform: uppercase;
+  color: var(--cc-grey-5);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
 }

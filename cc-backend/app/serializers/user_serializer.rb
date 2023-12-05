@@ -2,7 +2,7 @@ class UserSerializer < ActiveModel::Serializer
   attributes :id, :username, :reviews, :movie_lists
 
   def reviews
-    object.reviews.collect do |review|
+    object.reviews.order(created_at: :desc).collect do |review|
       {
         id: review.id,
         likes_count: review.likes_count,
@@ -16,6 +16,7 @@ class UserSerializer < ActiveModel::Serializer
           username: object.username
         },
         movie: {
+          tmdb_id: review.movie.tmdb_id,
           id: review.movie.id,
           title: review.movie.title,
           backdrop_path: review.movie.backdrop_path,
@@ -34,6 +35,7 @@ class UserSerializer < ActiveModel::Serializer
         movies: movie_list.movies.collect do |movie|
           {
             id: movie.id,
+            tmdb_id: movie.tmdb_id,
             title: movie.title,
             backdrop_path: movie.backdrop_path,
             poster_path: movie.poster_path

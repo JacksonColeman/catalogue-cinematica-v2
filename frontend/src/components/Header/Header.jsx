@@ -4,25 +4,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css"; // Import your stylesheet
 import LoginModal from "../LoginModal/LoginModal";
-import { FaSearch, FaTimes } from "react-icons/fa";
-import { LiaTimesSolid } from "react-icons/lia";
+import { FaSearch } from "@react-icons/all-files/fa/FaSearch";
+import { AiOutlineClose } from "@react-icons/all-files/ai/AiOutlineClose";
 
 const Header = ({ isLoggedIn, userName }) => {
   const [openModal, setOpenModal] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
-  const throttle = (func, limit) => {
-    let inThrottle;
-    return function (...args) {
-      if (!inThrottle) {
-        func(...args);
-        inThrottle = true;
-        setTimeout(() => (inThrottle = false), limit);
-      }
-    };
-  };
 
   const handleSearch = async (query) => {
     // Call the API to search for movies
@@ -119,7 +108,7 @@ const Header = ({ isLoggedIn, userName }) => {
                     ))}
                   </ul>
                 )}
-                <LiaTimesSolid
+                <AiOutlineClose
                   className="close-search-icon"
                   onClick={handleSearchIconClick}
                 />

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginModal.css";
-import { LiaTimesSolid } from "react-icons/lia";
-import { FaUser } from "react-icons/fa";
-import { FaLock } from "react-icons/fa";
+import { AiOutlineClose } from "@react-icons/all-files/ai/AiOutlineClose";
+import { FaUser } from "@react-icons/all-files/fa/FaUser";
+import { FaLock } from "@react-icons/all-files/fa/FaLock";
 
 const LoginModal = ({ open, handleCloseModal }) => {
   if (!open) {
@@ -50,7 +50,7 @@ const LoginModal = ({ open, handleCloseModal }) => {
     <div className="modal-component">
       <div className="overlay" onClick={handleCloseModal}></div>
       <div className="login-modal-container">
-        <LiaTimesSolid
+        <AiOutlineClose
           className="btn--close-modal"
           onClick={handleCloseModal}
         />

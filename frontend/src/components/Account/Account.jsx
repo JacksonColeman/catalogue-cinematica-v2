@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./Account.css";
 import { useState, useEffect } from "react";
 import ReviewComponent from "../Reviews/ReviewComponent";
+import MoviePostersDisplay from "./MoviePostersDisplay";
 
 const Account = ({ userId }) => {
   const navigate = useNavigate();
@@ -56,29 +57,45 @@ const Account = ({ userId }) => {
 
   return (
     <div className="account-page">
-      <p>{user?.username}</p>
-      <button onClick={handleLogout}>Log out</button>
+      <div className="account-page-left">
+        <div className="account-page-header">
+          <h2>{user?.username}'s Films</h2>
+          <a className="logout-button" onClick={handleLogout}>
+            Log out
+          </a>
+        </div>
 
-      <div className="account-favorites-section">
-        <h3>Favorites</h3>
-        {user.movie_lists &&
-          user.movie_lists.length > 0 &&
-          user.movie_lists
-            .filter((list) => list.name === "Favorites")[0]
-            .movies.map((movie) => <div key={movie.title}>{movie.title}</div>)}
-      </div>
+        <div className="account-films-section">
+          <div className="account-favorites-section">
+            {user.movie_lists && user.movie_lists.length > 0 ? (
+              <MoviePostersDisplay
+                collectionName={"Favorites"}
+                movies={
+                  user.movie_lists.filter(
+                    (list) => list.name === "Favorites"
+                  )[0].movies
+                }
+              />
+            ) : null}
+          </div>
 
-      <div className="account-watchlist-section">
-        <h3>Watchlist</h3>
-        {user.movie_lists &&
-          user.movie_lists.length > 0 &&
-          user.movie_lists
-            .filter((list) => list.name === "Watchlist")[0]
-            .movies.map((movie) => <div key={movie.title}>{movie.title}</div>)}
+          <div className="account-watchlist-section">
+            {user.movie_lists && user.movie_lists.length > 0 ? (
+              <MoviePostersDisplay
+                collectionName={"Watchlist"}
+                movies={
+                  user.movie_lists.filter(
+                    (list) => list.name === "Watchlist"
+                  )[0].movies
+                }
+              />
+            ) : null}
+          </div>
+        </div>
       </div>
 
       <div className="account-review-section">
-        <h3>Reviews</h3>
+        <h4 className="account-reviews-header">Recent Reviews</h4>
         {user.reviews &&
           user.reviews.map((review) => (
             <ReviewComponent key={review.id} review={review} showMovie={true} />

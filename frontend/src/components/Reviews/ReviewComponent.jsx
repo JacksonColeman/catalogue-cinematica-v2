@@ -67,20 +67,61 @@ const ReviewComponent = ({ review, showMovie }) => {
     }
   };
 
+  if (showMovie) {
+    return (
+      <div className="review-item sm-review-item">
+        <div className="review-poster-container">
+          <img
+            className="movie-poster-img"
+            src={
+              reviewData.movie.poster_path
+                ? `https://image.tmdb.org/t/p/w185/${reviewData.movie.poster_path}`
+                : ""
+            }
+            alt={`${reviewData.movie.title} Poster`}
+          />
+        </div>
+        <div className="review-body">
+          <a
+            className="review-comp-movie-title"
+            href={`/movie/${reviewData.movie.tmdb_id}`}
+          >
+            {reviewData.movie.title}
+          </a>
+          <header className="review-header">
+            <span className="review-username">{reviewData.user.username}</span>{" "}
+            <Rating
+              className="review-rating"
+              value={reviewData.rating / 2}
+              precision={0.5}
+              readOnly
+            />
+            <p className="review-date">
+              {new Date(reviewData.created_at).toLocaleDateString()}
+            </p>
+          </header>
+          <p className="review-text">{reviewData.text}</p>
+          <footer className="review-footer">
+            {reviewData.liked_by_current_user ? (
+              <AiFillHeart className="heart-fill-icon" onClick={handleUnlike} />
+            ) : (
+              <AiOutlineHeart
+                className="heart-outline-icon"
+                onClick={handleLike}
+              />
+            )}
+            <span>{reviewData.likes_count} likes</span>
+            {/* <a href="#" className="reply-button">
+          Reply
+        </a> */}
+          </footer>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="review-item">
-      {showMovie ? (
-        <img
-          className="movie-poster-img"
-          src={
-            reviewData.movie.backdrop_path
-              ? `https://image.tmdb.org/t/p/w185/${reviewData.movie.poster_path}`
-              : ""
-          }
-          alt={`${reviewData.movie.title} Poster`}
-        />
-      ) : null}
-      {showMovie ? <h4>{reviewData.movie.title}</h4> : null}
       <header className="review-header">
         <span className="review-username">{reviewData.user.username}</span>{" "}
         <Rating

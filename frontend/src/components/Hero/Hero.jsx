@@ -15,8 +15,9 @@ const Hero = () => {
           </h1>
           <p className="hero-subheader">
             Join Catalogue Cinematica today and take your moviegoing experience
-            to the next level
+            to the next level — Discover, Watch, & Review
           </p>
+
           <button className="btn" onClick={() => setOpenModal(true)}>
             Get Started
           </button>

@@ -3,17 +3,17 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CastThumbnailComponent from "./CastThumbnailComponent";
 import "./MovieDetailsComponent.css"; // Import the CSS file
-import { LuClock4 } from "react-icons/lu";
+
 import { BiCameraMovie } from "react-icons/bi";
 import { BsPencilSquare } from "react-icons/bs";
-import { RiVideoAddLine, RiVidiconFill } from "react-icons/ri";
-import {
-  AiOutlineCalendar,
-  AiOutlineHeart,
-  AiFillHeart,
-  AiOutlineComment,
-} from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { RiVideoAddLine } from "@react-icons/all-files/ri/RiVideoAddLine";
+import { RiVidiconFill } from "@react-icons/all-files/ri/RiVidiconFill";
+
+import { AiOutlineClockCircle } from "@react-icons/all-files/ai/AiOutlineClockCircle";
+import { AiOutlineCalendar } from "@react-icons/all-files/ai/AiOutlineCalendar";
+import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
+import { AiFillHeart } from "@react-icons/all-files/ai/AiFillHeart";
+
 import MovieReviewForm from "../Reviews/MovieReviewForm";
 import ReviewContainer from "../Reviews/ReviewContainer";
 import CastDisplay from "./CastDisplay";
@@ -202,7 +202,7 @@ const MovieDetailsComponent = () => {
               <span>{movieDetails.release_date.slice(0, 4)}</span>
             </p>
             <p className="runtime">
-              <LuClock4 className="clock-icon" />
+              <AiOutlineClockCircle className="clock-icon" />
               <span className="runtime-text">{movieDetails.runtime} mins</span>
             </p>
           </div>
