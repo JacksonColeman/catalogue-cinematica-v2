@@ -6,12 +6,14 @@ import "./Header.css"; // Import your stylesheet
 import LoginModal from "../LoginModal/LoginModal";
 import { FaSearch } from "@react-icons/all-files/fa/FaSearch";
 import { AiOutlineClose } from "@react-icons/all-files/ai/AiOutlineClose";
+import { AiOutlineMenu } from "@react-icons/all-files/ai/AiOutlineMenu";
 
 const Header = ({ isLoggedIn, userName }) => {
   const [openModal, setOpenModal] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   const handleSearch = async (query) => {
     // Call the API to search for movies
@@ -47,6 +49,10 @@ const Header = ({ isLoggedIn, userName }) => {
     handleSearchIconClick();
   };
 
+  const toggleNavOpen = () => {
+    setIsNavOpen(!isNavOpen);
+  };
+
   return (
     <header className="header" id="top">
       <div
@@ -63,7 +69,7 @@ const Header = ({ isLoggedIn, userName }) => {
         <p className="home-link-text">Cinematica</p>
       </a>
       <nav className="header-nav">
-        <ul className="header-links">
+        <ul className={`header-links ${isNavOpen ? "nav-open" : ""}`}>
           <div className="search-container">
             <li onClick={handleSearchIconClick}>
               <FaSearch className="search-icon" />
@@ -118,7 +124,9 @@ const Header = ({ isLoggedIn, userName }) => {
           {isLoggedIn ? (
             <>
               <li>
-                <Link to="/account">Account</Link>
+                <Link to="/account" onClick={() => setIsNavOpen(false)}>
+                  Account
+                </Link>
               </li>
             </>
           ) : (
@@ -135,15 +143,27 @@ const Header = ({ isLoggedIn, userName }) => {
             </>
           )}
           <li>
-            <Link to="/films">Discover</Link>
+            <Link to="/films" onClick={() => setIsNavOpen(false)}>
+              Discover
+            </Link>
           </li>
           <li>
-            <Link to="/reviews">Reviews</Link>
+            <Link to="/reviews" onClick={() => setIsNavOpen(false)}>
+              Reviews
+            </Link>
           </li>
           {/* <li>
             <Link to="/lists">Lists</Link>
           </li> */}
         </ul>
+        <AiOutlineMenu
+          className={`menu-icon ${isNavOpen ? "nav-open" : ""}`}
+          onClick={toggleNavOpen}
+        />
+        <AiOutlineClose
+          className={`close-menu-icon ${isNavOpen ? "nav-open" : ""}`}
+          onClick={toggleNavOpen}
+        />
       </nav>
     </header>
   );

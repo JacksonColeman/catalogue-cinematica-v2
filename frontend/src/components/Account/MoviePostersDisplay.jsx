@@ -24,13 +24,13 @@ const MoviePostersDisplay = ({ collectionName, movies }) => {
       <div className="movie-posters-display">
         {movies.length == 0 ? "No movies yet!" : null}
         {displayedMovies.map((m, index) => (
-          <div key={index}>
+          <div className="movie-poster-item" key={index}>
             <img
               className="movie-poster-display-img"
               src={
                 m.poster_path
                   ? `https://image.tmdb.org/t/p/w185/${m.poster_path}`
-                  : ""
+                  : "/img/poster-placeholder.jpg"
               }
               alt={`${m.title} Poster`}
             />

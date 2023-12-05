@@ -76,7 +76,7 @@ const ReviewComponent = ({ review, showMovie }) => {
             src={
               reviewData.movie.poster_path
                 ? `https://image.tmdb.org/t/p/w185/${reviewData.movie.poster_path}`
-                : ""
+                : "/img/poster-placeholder.jpg"
             }
             alt={`${reviewData.movie.title} Poster`}
           />

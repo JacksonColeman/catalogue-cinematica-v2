@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :reviews, only: [:update, :destroy] do
+  end
+
   resources :movie_lists, only: [:index, :show, :create, :destroy, :update] do
     member do
       post 'add_movie/:movie_id', to: 'movie_lists#add_movie', as: 'add_movie'

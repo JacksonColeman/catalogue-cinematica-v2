@@ -75,6 +75,16 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def destroy
+    review = Review.find(params[:id])
+  
+    if review.destroy
+      render json: { message: 'Review deleted successfully' }
+    else
+      render json: { error: 'Unable to delete the review' }, status: :unprocessable_entity
+    end
+  end
+
   def likes_count
     read_attribute(:likes_count)
   end

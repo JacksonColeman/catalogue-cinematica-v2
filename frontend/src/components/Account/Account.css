@@ -2,7 +2,8 @@
   color: var(--cc-light-grey);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 2rem 4rem;
+  /* padding: 1rem 2rem; */
+  margin: 1rem 2rem;
   column-gap: 2rem;
 }
 
@@ -30,6 +31,10 @@
 .account-reviews-header {
 }
 
+.account-review-section {
+  margin-right: 1rem;
+}
+
 .logout-button {
   text-transform: uppercase;
   color: var(--cc-grey-5);
@@ -42,4 +47,17 @@
   font-size: 0.8rem;
   text-decoration: underline;
   cursor: pointer;
+}
+
+@media (max-width: 1150px) {
+  .account-page {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 700px) {
+  .account-page {
+    margin: 1rem;
+  }
 }

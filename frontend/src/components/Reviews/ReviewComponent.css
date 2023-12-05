@@ -2,6 +2,7 @@
   border-top: 1px solid var(--cc-grey-7);
   padding: 1rem;
   /* max-height: 12rem; */
+  overflow: scroll;
 }
 
 .review-header {
