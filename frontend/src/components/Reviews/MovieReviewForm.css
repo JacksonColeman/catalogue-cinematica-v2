@@ -3,7 +3,7 @@
   left: 50%;
   top: 0%;
   margin: 0 auto;
-  width: 48rem;
+  max-width: 48rem;
   min-height: 20rem;
   transform: translate(-50%, 20%);
   background-color: var(--cc-grey-7);
@@ -17,6 +17,25 @@
 .review-flex-container {
   display: flex;
   gap: 2rem;
+}
+
+@media (max-width: 750px) {
+  .review-modal {
+    min-height: 80vh;
+    transform: translate(-50%, 5%);
+  }
+
+  .review-flex-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 90vw;
+  }
+
+  .review-text-area {
+    height: 8rem;
+    width: 20rem;
+  }
 }
 
 .movie-review-form {
@@ -33,7 +52,7 @@
 }
 
 .review-movie-poster {
-  height: 278px;
+  max-height: 278px;
 }
 
 .review-text-area {

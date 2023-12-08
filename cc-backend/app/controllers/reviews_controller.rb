@@ -24,7 +24,7 @@ class ReviewsController < ApplicationController
     if movie
       reviews = Review.where(movie_id: movie.id).order(created_at: :desc)
       reviews_data = reviews.map { |review| review_json(review) }
-      render json: reviews_data, include: 'user'
+      render json: reviews, include: ['user','movie']
     else
       render json: { error: 'Movie not found' }, status: :not_found
     end

@@ -64,8 +64,11 @@ const App = () => {
       {/* <img src="../public/img/seats.jpg" /> */}
       <Header isLoggedIn={isLoggedIn} userName={user?.username} />
       <Routes>
-        <Route path="/movie/:id" element={<MovieDetailsComponent />} />
-        <Route path="/" element={<Hero />} />
+        <Route
+          path="/movie/:id"
+          element={<MovieDetailsComponent isLoggedIn={isLoggedIn} />}
+        />
+        <Route path="/" element={<Hero isLoggedIn={isLoggedIn} />} />
         <Route path="/films" element={<MovieList />} />
         <Route path="/account" element={<Account userId={user?.id} />} />
         <Route path="/lists" element={<ListPage />} />

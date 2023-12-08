@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import "./LoginModal.css";
 import { AiOutlineClose } from "@react-icons/all-files/ai/AiOutlineClose";
 import { FaUser } from "@react-icons/all-files/fa/FaUser";
 import { FaLock } from "@react-icons/all-files/fa/FaLock";
+import SignupModal from "../SignupModal/SignupModal";
 
 const LoginModal = ({ open, handleCloseModal }) => {
   if (!open) {
     return null;
   }
 
-  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [signUp, setSignUp] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -45,6 +45,15 @@ const LoginModal = ({ open, handleCloseModal }) => {
       console.error("An error occurred:", error);
     }
   };
+
+  const handleSignUp = () => {
+    setSignUp(true);
+  };
+
+  if (signUp) {
+    console.log("moo");
+    return <SignupModal open={true} handleCloseModal={handleCloseModal} />;
+  }
 
   return (
     <div className="modal-component">
@@ -96,6 +105,12 @@ const LoginModal = ({ open, handleCloseModal }) => {
               Sign In
             </button>
           </form>
+          <p className="sign-up-prompt">
+            Don't have an account?{" "}
+            <p className="sign-up-link" onClick={handleSignUp}>
+              Sign Up!
+            </p>
+          </p>
         </div>
       </div>
     </div>

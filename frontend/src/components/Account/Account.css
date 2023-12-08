@@ -4,7 +4,7 @@
   grid-template-columns: 1fr 1fr;
   /* padding: 1rem 2rem; */
   margin: 1rem 2rem;
-  column-gap: 2rem;
+  column-gap: 4rem;
 }
 
 .account-page-header {
@@ -15,9 +15,18 @@
   grid-column: 1/2;
   grid-row: 1/-1;
 }
+
+.account-reviews-header {
+  border-bottom: 1px solid var(--cc-grey-7);
+}
 .account-review-section {
   grid-column: 2/3;
   grid-row: 1/-1;
+}
+
+.account-reviews-container {
+  max-height: 90vh;
+  overflow: scroll;
 }
 
 .account-favorites-section {

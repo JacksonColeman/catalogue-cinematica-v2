@@ -2,7 +2,7 @@
   border-top: 1px solid var(--cc-grey-7);
   padding: 1rem;
   /* max-height: 12rem; */
-  overflow: scroll;
+  overflow-x: scroll;
 }
 
 .review-header {
@@ -101,4 +101,9 @@
 .review-comp-movie-title:hover,
 .review-comp-movie-title:hover {
   color: var(--cc-gold);
+}
+
+.like-error-msg {
+  margin-top: 0.5rem;
+  color: var(--cc-red);
 }

@@ -5,9 +5,14 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 const ReviewComponent = ({ review, showMovie }) => {
   const [reviewData, setReviewData] = useState(review);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   // method to like review
   const handleLike = async () => {
+    if (reviewData.liked_by_current_user == null) {
+      setIsLoggedIn(false);
+      return;
+    }
     try {
       const response = await fetch(`/api/reviews/${review.id}/like`, {
         method: "POST",
@@ -115,6 +120,9 @@ const ReviewComponent = ({ review, showMovie }) => {
           Reply
         </a> */}
           </footer>
+          {isLoggedIn ? null : (
+            <p className="like-error-msg">Must be logged in to like a review</p>
+          )}
         </div>
       </div>
     );
@@ -142,10 +150,10 @@ const ReviewComponent = ({ review, showMovie }) => {
           <AiOutlineHeart className="heart-outline-icon" onClick={handleLike} />
         )}
         <span>{reviewData.likes_count} likes</span>
-        {/* <a href="#" className="reply-button">
-          Reply
-        </a> */}
       </footer>
+      {isLoggedIn ? null : (
+        <p className="like-error-msg">Must be logged in to like a review</p>
+      )}
     </div>
   );
 };

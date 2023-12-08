@@ -96,10 +96,16 @@ const Account = ({ userId }) => {
 
       <div className="account-review-section">
         <h4 className="account-reviews-header">Recent Reviews</h4>
-        {user.reviews &&
-          user.reviews.map((review) => (
-            <ReviewComponent key={review.id} review={review} showMovie={true} />
-          ))}
+        <div className="account-reviews-container">
+          {user.reviews &&
+            user.reviews.map((review) => (
+              <ReviewComponent
+                key={review.id}
+                review={review}
+                showMovie={true}
+              />
+            ))}
+        </div>
       </div>
     </div>
   );

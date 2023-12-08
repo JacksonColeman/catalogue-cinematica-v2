@@ -14,7 +14,7 @@
   top: 0;
   margin: 0 auto;
   width: 20rem;
-  height: 20rem;
+  min-height: 20rem;
   transform: translate(-50%, 50%);
   background-color: var(--cc-grey-7);
   color: var(--cc-light-grey);
@@ -84,4 +84,23 @@
   top: 16px;
   right: 20px;
   width: 24px;
+}
+
+.sign-up-prompt {
+  margin-top: 2rem;
+  font-size: 1rem;
+}
+
+.sign-up-link {
+  display: inline-block;
+  color: var(--cc-gold);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.sign-up-link:hover,
+.sign-up-link:active {
+  display: inline-block;
+  color: var(--cc-dark-gold);
+  cursor: pointer;
 }

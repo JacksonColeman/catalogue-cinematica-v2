@@ -11,7 +11,11 @@ class UsersController < ApplicationController
   end
 
   def current
-    render json: current_user, serializer: UserSerializer, status: :ok
+    if current_user
+      render json: current_user, serializer: UserSerializer, status: :ok
+    else
+      render json: { error: 'User not logged in' }, status: :unauthorized
+    end
   end
 
   def show

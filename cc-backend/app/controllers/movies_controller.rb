@@ -26,7 +26,11 @@ class MoviesController < ApplicationController
     end
 
     def check_movie_in_user_lists
-      user = current_user # Assuming you have a method to get the current user
+      user = current_user
+    
+      # Check if the user is present
+      return { is_favorite: false, is_watchlist: false } unless user
+    
       movie_id = params[:id].to_i
     
       favorites_list = user.movie_lists.find_by(name: 'Favorites')

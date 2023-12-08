@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import CastThumbnailComponent from "./CastThumbnailComponent";
 import "./MovieDetailsComponent.css"; // Import the CSS file
 
+import LoginModal from "../LoginModal/LoginModal";
+
 import { BiCameraMovie } from "react-icons/bi";
 import { BsPencilSquare } from "react-icons/bs";
 import { RiVideoAddLine } from "@react-icons/all-files/ri/RiVideoAddLine";
@@ -18,9 +20,10 @@ import MovieReviewForm from "../Reviews/MovieReviewForm";
 import ReviewContainer from "../Reviews/ReviewContainer";
 import CastDisplay from "./CastDisplay";
 
-const MovieDetailsComponent = () => {
+const MovieDetailsComponent = ({ isLoggedIn }) => {
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const { id } = useParams();
 
   const [inDb, setInDb] = useState(false);
@@ -165,6 +168,10 @@ const MovieDetailsComponent = () => {
   };
 
   const handleAddToList = async (listName) => {
+    if (!isLoggedIn) {
+      setIsLoginOpen(true);
+      return;
+    }
     console.log("Calling handle add to list");
     console.log(backendMovieData);
     await addToList(backendMovieData.movie.tmdb_id, listName).then(() =>
@@ -179,8 +186,23 @@ const MovieDetailsComponent = () => {
     );
   };
 
+  const handleOpenReviewModal = () => {
+    if (!isLoggedIn) {
+      setIsLoginOpen(true);
+      return;
+    }
+
+    setOpenReviewModal(true);
+  };
+
   return (
     <div className="movie-details-container">
+      {isLoginOpen ? (
+        <LoginModal
+          open={true}
+          handleCloseModal={() => setIsLoginOpen(false)}
+        />
+      ) : null}
       <MovieReviewForm
         movie={movieDetails}
         postMovie={postMovie}
@@ -209,47 +231,51 @@ const MovieDetailsComponent = () => {
           <div className="btn-group">
             <a
               href="#top"
-              onClick={() => setOpenReviewModal(true)}
+              onClick={handleOpenReviewModal}
               className="movie-btn"
             >
               <BsPencilSquare />
               <span className="movie-btn-text">Review</span>
             </a>
             {backendMovieData && backendMovieData?.check?.is_favorite ? (
-              <button
+              <a
+                href="#top"
                 className="movie-btn"
                 onClick={() => handleRemoveFromList("Favorites")}
               >
                 {" "}
                 <AiFillHeart className="favorite-btn-filled" />
                 <span className="movie-btn-text">Favorite</span>
-              </button>
+              </a>
             ) : (
-              <button
+              <a
+                href="#top"
                 className="movie-btn"
                 onClick={() => handleAddToList("Favorites")}
               >
                 {" "}
                 <AiOutlineHeart />
                 <span className="movie-btn-text">Favorite</span>
-              </button>
+              </a>
             )}
             {backendMovieData && backendMovieData.check?.is_watchlist ? (
-              <button
+              <a
+                href="#top"
                 className="movie-btn "
                 onClick={() => handleRemoveFromList("Watchlist")}
               >
                 <RiVidiconFill className="favorite-btn-filled" />
                 <span className="movie-btn-text">Watchlist</span>
-              </button>
+              </a>
             ) : (
-              <button
+              <a
+                href="#top"
                 className="movie-btn"
                 onClick={() => handleAddToList("Watchlist")}
               >
                 <RiVideoAddLine />
                 <span className="movie-btn-text">Watchlist</span>
-              </button>
+              </a>
             )}
           </div>
         </div>

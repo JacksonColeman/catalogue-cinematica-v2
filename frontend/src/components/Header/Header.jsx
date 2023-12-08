@@ -8,7 +8,7 @@ import { FaSearch } from "@react-icons/all-files/fa/FaSearch";
 import { AiOutlineClose } from "@react-icons/all-files/ai/AiOutlineClose";
 import { AiOutlineMenu } from "@react-icons/all-files/ai/AiOutlineMenu";
 
-const Header = ({ isLoggedIn, userName }) => {
+const Header = ({ isLoggedIn }) => {
   const [openModal, setOpenModal] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -132,9 +132,7 @@ const Header = ({ isLoggedIn, userName }) => {
           ) : (
             <>
               <li>
-                <a href="#" onClick={() => setOpenModal(true)}>
-                  Sign In
-                </a>
+                <a onClick={() => setOpenModal(true)}>Sign In</a>
                 <LoginModal
                   open={openModal}
                   handleCloseModal={() => setOpenModal(false)}

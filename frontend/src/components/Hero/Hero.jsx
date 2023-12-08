@@ -2,7 +2,7 @@ import SignupModal from "../SignupModal/SignupModal";
 import "./Hero.css";
 import { useState } from "react";
 
-const Hero = () => {
+const Hero = ({ isLoggedIn }) => {
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -18,9 +18,15 @@ const Hero = () => {
             to the next level — Discover, Watch, & Review
           </p>
 
-          <button className="btn" onClick={() => setOpenModal(true)}>
-            Get Started
-          </button>
+          {isLoggedIn ? (
+            <a className="btn" href="/films">
+              Discover
+            </a>
+          ) : (
+            <button className="btn" onClick={() => setOpenModal(true)}>
+              Get Started
+            </button>
+          )}
         </div>
       </div>
       <SignupModal
