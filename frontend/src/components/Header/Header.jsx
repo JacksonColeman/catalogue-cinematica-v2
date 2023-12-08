@@ -1,6 +1,7 @@
 // components/Header.js
 import React from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import debounce from "lodash.debounce";
 import { Link } from "react-router-dom";
 import "./Header.css"; // Import your stylesheet
 import LoginModal from "../LoginModal/LoginModal";
@@ -34,6 +35,8 @@ const Header = ({ isLoggedIn }) => {
     }
   };
 
+  const debouncedSearch = useCallback(debounce(handleSearch, 300), []);
+
   const handleSearchIconClick = () => {
     setIsSearchOpen(!isSearchOpen);
     setSearchQuery("");
@@ -42,7 +45,7 @@ const Header = ({ isLoggedIn }) => {
   const handleSearchInputChange = (e) => {
     const newQuery = e.target.value;
     setSearchQuery(newQuery);
-    handleSearch(newQuery);
+    debouncedSearch(newQuery);
   };
 
   const handleOverlayClick = () => {
